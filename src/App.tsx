@@ -1,76 +1,109 @@
 import React from 'react';
-import { Navbar, Button, Alignment, Menu, MenuItem, MenuDivider, InputGroup } from '@blueprintjs/core';
+import { Navbar, Button, Alignment, Menu, MenuItem, MenuDivider, InputGroup, Tag, Card, Tabs, Tab} from '@blueprintjs/core';
 import { Grid, Stack } from '@mui/material'
-import { AreaChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Area, ReferenceLine, Tooltip } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Area, ReferenceLine, Tooltip } from 'recharts';
 import '@blueprintjs/core/lib/css/blueprint.css';
 
 
 
 
-function LineChart()
+function DeepTSLineChart()
 {
 
   const data = [
     {
-      "name": "Page A",
-      "uv": 4000,
-      "pv": 2400,
-      "amt": 2400
+      "Temperature": 20,
+      "uv": 10,
+      "pv": 24,
+      "amt": 62
     },
     {
-      "name": "Page B",
-      "uv": 3000,
-      "pv": 1398,
-      "amt": 2210
+      "Temperature": 21,
+      "uv": 40,
+      "pv": 215,
+      "amt": 240
     },
     {
-      "name": "Page C",
-      "uv": 2000,
-      "pv": 9800,
-      "amt": 2290
+      "Temperature": 22,
+      "uv": 400,
+      "pv": -3,
+      "amt": -105
     },
     {
-      "name": "Page D",
-      "uv": 2780,
-      "pv": 3908,
-      "amt": 2000
+      "Temperature": 23,
+      "uv": 400,
+      "pv": 29,
+      "amt": 29
     },
     {
-      "name": "Page E",
-      "uv": 1890,
-      "pv": 4800,
-      "amt": 2181
+      "Temperature": 24,
+      "uv": 4,
+      "pv": 0,
+      "amt": 0
     },
-    {
-      "name": "Page F",
-      "uv": 2390,
-      "pv": 3800,
-      "amt": 2500
-    },
-    {
-      "name": "Page G",
-      "uv": 3490,
-      "pv": 4300,
-      "amt": 2100
-    }
   ]
 
   return (
+    <Grid item>
+      <Card className="bp4-elevation-3">
 
-    <ResponsiveContainer width="100%" height={400}>
-    <AreaChart data={data}
-      margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
-      <XAxis dataKey="name" />
-      <YAxis />
-      <CartesianGrid strokeDasharray="3 3" />
-      <Tooltip />
-      <ReferenceLine x="Page C" stroke="green" label="Min PAGE" />
-      <ReferenceLine y={4000} label="Max" stroke="red" strokeDasharray="3 3" />
-      <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
-      <Area type="monotone" dataKey="pv" stroke="#8884d8" fill="#8884d8" />
-      <Area type="monotone" dataKey="amt" stroke="#8884d8" fill="#8884d8" />
-    </AreaChart>
-  </ResponsiveContainer>
+        <Grid container>
+          <Grid xs={12}>
+            <h1>GOMP001a_abps_0461</h1>
+          </Grid>
+
+          <Grid xs={12}>
+            <Menu>
+              <Tag className="bp4-interactive bp4-large bp4-round bp4-minimal bp4-intent-warning">T<sub>ONSET</sub> = 64.511 &deg;C</Tag>
+              <Tag className="bp4-interactive bp4-large bp4-round bp4-minimal bp4-intent-warning">T<sub>M1</sub> = 64.511 &deg;C</Tag>
+              <Tag className="bp4-interactive bp4-large bp4-round bp4-minimal bp4-intent-warning">T<sub>AGG</sub> = 64.511 &deg;C</Tag>
+            </Menu>
+         </Grid>
+          
+          <Grid xs={10}>
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart data={data} margin={{ right: 25, top: 10 }} onClick={(e) => {console.log(e)}}>
+                <Tooltip/>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="Temperature" interval={1} />
+                <YAxis interval={1} />
+                
+                <Line type="monotone" dataKey="pv" strokeWidth={3} stroke="#8884d8" activeDot={{ r: 6 }} />
+                <Line type="monotone" dataKey="uv" strokeWidth={3} stroke="#82ca9d" activeDot={{ r: 6 }} strokeDasharray="20 10"/>
+
+                <ReferenceLine x={21} stroke="blue" label="T_ONSET" />
+                <ReferenceLine x={22} stroke="red" label="T_M1" />
+                <ReferenceLine x={23} stroke="green" label="T_AGG" />
+                
+
+              </LineChart>
+            </ResponsiveContainer>
+          </Grid>
+          <Grid xs={2}>
+            <Menu>
+              <MenuItem icon="waves" text="Signal Channels" disabled/>
+              <MenuItem icon="circle" text="330nm" />
+              <MenuItem icon="circle" text="350nm" />
+              <MenuItem icon="circle" text="Ratio" />
+              <MenuItem icon="circle" text="Scattering" />
+              <MenuItem icon="circle" text="d[330nm]/dT" />
+              <MenuItem icon="circle" text="d[350nm]/dT" />
+              <MenuItem icon="circle" text="d[Ratio]/dT" />
+              <MenuItem icon="circle" text="d[Scattering]/dT" />
+            </Menu>
+        </Grid>
+        <Grid xs={12}>
+          <Menu>
+            <MenuItem icon="small-plus" text="Mark Changepoint: T_ONSET" />
+            <MenuItem icon="small-plus" text="Mark Changepoint: T_M1" />
+            <MenuItem icon="small-plus" text="Mark Changepoint: T_AGG" />
+          </Menu>
+        </Grid>
+
+        </Grid>
+      </Card>
+    </Grid>
+    
 
   )
 }
@@ -86,16 +119,14 @@ function App() {
             <Navbar.Heading>DeepTS</Navbar.Heading>
             <Navbar.Divider />
             <Button className="" icon="plus" text="New Workspace" />
-            <Button className="" icon="floppy-disk" text="Save" />
+            <Navbar.Divider />
+            <Button className="" icon="floppy-disk" text="Save Workspace" />
         </Navbar.Group>
     </Navbar>
     <Grid container spacing={1}>
       <Grid item xs={2}>
       <Menu>
-        <MenuItem text="Dataset Global Metrics" icon="grid-view" intent="primary">
-            <MenuItem icon="tick" text="T_M1 Histogram" />
-            <MenuItem icon="tick" text="T_AGG Histogram" />
-        </MenuItem>
+        <MenuItem icon="align-justify" text="All Signals" disabled/>
         <MenuDivider />
         <InputGroup 
         asyncControl={true}
@@ -111,13 +142,20 @@ function App() {
         <MenuItem icon="circle" text="GOMP_0007" />
       </Menu>
       </Grid>
-      <Grid item xs={10}>
-        <LineChart />
-        <LineChart />
-        <LineChart />
-        <LineChart />
-        <LineChart />
+      <Grid xs={10}>
+      <Tabs id="TabsExample" large selectedTabId="rx">
+        <Tab id="mb" title="Changepoint Workspace" panelClassName="ember-panel" />
+        <Tab id="ng" title="Global Metrics" />
+      </Tabs>
+        <Stack spacing={2}>
+
+          <DeepTSLineChart />
+          <DeepTSLineChart />
+          <DeepTSLineChart />
+        </Stack>
       </Grid>
+      
+      
     </Grid>
     
     </div>
