@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Button, Alignment, Menu, MenuItem, MenuDivider, InputGroup, Tag, Card, Tabs, Tab} from '@blueprintjs/core';
 import { Grid, Stack } from '@mui/material'
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Area, ReferenceLine, Tooltip } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Area, ReferenceLine, Tooltip, Legend } from 'recharts';
 import '@blueprintjs/core/lib/css/blueprint.css';
 
 
@@ -41,6 +41,30 @@ function DeepTSLineChart()
       "pv": 0,
       "amt": 0
     },
+    {
+      "Temperature": 25,
+      "uv": 4,
+      "pv": 0,
+      "amt": 0
+    },
+    {
+      "Temperature": 26,
+      "uv": 4,
+      "pv": 0,
+      "amt": 0
+    },
+    {
+      "Temperature": 27,
+      "uv": 4,
+      "pv": 0,
+      "amt": 0
+    },
+    {
+      "Temperature": 28,
+      "uv": 4,
+      "pv": 0,
+      "amt": 0
+    },
   ]
 
   return (
@@ -54,9 +78,9 @@ function DeepTSLineChart()
 
           <Grid xs={12}>
             <Menu>
-              <Tag className="bp4-interactive bp4-large bp4-round bp4-minimal bp4-intent-warning">T<sub>ONSET</sub> = 64.511 &deg;C</Tag>
-              <Tag className="bp4-interactive bp4-large bp4-round bp4-minimal bp4-intent-warning">T<sub>M1</sub> = 64.511 &deg;C</Tag>
-              <Tag className="bp4-interactive bp4-large bp4-round bp4-minimal bp4-intent-warning">T<sub>AGG</sub> = 64.511 &deg;C</Tag>
+              <Tag className="bp4-interactive bp4-large bp4-round bp4-minimal bp4-intent-primary">T<sub>ONSET</sub> = 64.511 &deg;C</Tag>
+              <Tag className="bp4-interactive bp4-large bp4-round bp4-minimal bp4-intent-primary">T<sub>M1</sub> = 64.511 &deg;C</Tag>
+              <Tag className="bp4-interactive bp4-large bp4-round bp4-minimal bp4-intent-primary">T<sub>AGG</sub> = 64.511 &deg;C</Tag>
             </Menu>
          </Grid>
           
@@ -70,11 +94,13 @@ function DeepTSLineChart()
                 
                 <Line type="monotone" dataKey="pv" strokeWidth={3} stroke="#8884d8" activeDot={{ r: 6 }} />
                 <Line type="monotone" dataKey="uv" strokeWidth={3} stroke="#82ca9d" activeDot={{ r: 6 }} strokeDasharray="20 10"/>
+                <Line type="monotone" dataKey="amt" strokeWidth={3} stroke="grey" activeDot={{ r: 6 }} strokeDasharray="0 0"/>
 
                 <ReferenceLine x={21} stroke="blue" label="T_ONSET" />
                 <ReferenceLine x={22} stroke="red" label="T_M1" />
                 <ReferenceLine x={23} stroke="green" label="T_AGG" />
                 
+                <Legend />
 
               </LineChart>
             </ResponsiveContainer>
@@ -144,8 +170,9 @@ function App() {
       </Grid>
       <Grid xs={10}>
       <Tabs id="TabsExample" large selectedTabId="rx">
-        <Tab id="mb" title="Changepoint Workspace" panelClassName="ember-panel" />
-        <Tab id="ng" title="Global Metrics" />
+        <Tab id="mb" title="Changepoint Workspace" icon="series-add"/>
+        <Tab id="dt" title="Data Table" icon="th"/>
+        <Tab id="ng" title="Global Metrics" icon="stacked-chart"/>
       </Tabs>
         <Stack spacing={2}>
 
